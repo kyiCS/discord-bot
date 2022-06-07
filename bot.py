@@ -7,25 +7,23 @@
 
 import os
 
-
 import discord
 from dotenv import load_dotenv
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 
-
 class MyClient(discord.Client):
-
-    async def shutdown(ctx):
-        await ctx.bot.logout()
-
     async def on_ready(self):
-        print('Logged on as {0}!'.format(self.user))
+        print('Logged on as', self.user)
 
     async def on_message(self, message):
-        print('Message from {0.author}: {0.content}'.format(message))
+        # don't respond to ourselves
+        if message.author == self.user:
+            return
 
+        if message.content == 'ping':
+            await message.channel.send('pong')
 
 client = MyClient()
 client.run(TOKEN)
