@@ -25,5 +25,9 @@ class MyClient(discord.Client):
         if message.content == 'ping':
             await message.channel.send('pong')
 
+        if message.content == '/shutdown':
+            await self.logout()
+
+
 client = MyClient()
 client.run(TOKEN)
